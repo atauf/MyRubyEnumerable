@@ -34,7 +34,7 @@ module Enumerable
 
 	#tested
 	def my_all?
-		#all? [{ |obj| block } ] → true or false
+		#all? [{ |obj| block }] → true or false
 		#Passes each element of the collection to the given block. The method returns true if the block never returns false or nil. If the block is not given, Ruby adds an implicit block of { |obj| obj } which will cause all? to return true when none of the collection members are false or nil.
 		result = true
 		if block_given?
@@ -68,18 +68,18 @@ module Enumerable
 			for i in self
 				result = yield(i)
 				#puts result
-				if result == false || result == nil
+				if result == true
 					#puts "Result = #{result}"
-					return false
+					return true
 				end
 			end
 		else
 			for i in self
-				if i == false || i == nil
-					#puts "false"
-					return false
+				if i != false && i != nil
+					#puts "true"
+					return true
 				end
-				#puts "true"
+				#puts "false"
 			end
 		end
 		#puts "Result = #{result}"
@@ -130,6 +130,7 @@ module Enumerable
 end
 
 array = [3, 4, 2, 4, 4, 0, 23, 9]
+#array = [false, 1, nil]
 
 =begin # my_each and my_each_with_index TESTS
 array.my_each_with_index do |num, i|
@@ -143,4 +144,5 @@ array.my_select do |i|
 end
 =end
 
-array.my_all?
+#array.my_any? {|num| num >= 23}
+#puts "true" if array.any? {|num| num >= 23}
