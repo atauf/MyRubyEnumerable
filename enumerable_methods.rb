@@ -59,7 +59,7 @@ module Enumerable
 		result
 	end
 
-
+	#tested
 	def my_any?
 		#any? [{ |obj| block }] → true or false
 		#Passes each element of the collection to the given block. The method returns true if the block ever returns a value other than false or nil. If the block is not given, Ruby adds an implicit block of { |obj| obj } that will cause any? to return true if at least one of the collection members is not false or nil.
@@ -69,7 +69,7 @@ module Enumerable
 				result = yield(i)
 				#puts result
 				if result == true
-					#puts "Result = #{result}"
+					puts "Result = #{result}"
 					return true
 				end
 			end
@@ -82,14 +82,35 @@ module Enumerable
 				#puts "false"
 			end
 		end
-		#puts "Result = #{result}"
+		puts "Result = #{result}"
 		result
 	end
 
-
+	# tested
 	def my_none?
 		#none? [{ |obj| block }] → true or false
 		#Passes each element of the collection to the given block. The method returns true if the block never returns true for all elements. If the block is not given, none? will return true only if none of the collection members is true.
+		result = true
+		if block_given?
+			for i in self
+				result = yield(i)
+				# puts result
+				if result == true
+					# puts "Result = #{result}\nSo returning false"
+					return false
+				end
+			end
+		else
+			for i in self
+				if i == true
+					# puts "false"
+					return false
+				end
+				# puts "false"
+			end
+		end
+		# puts "Result = #{result}\nReturn: True"
+		true
 	end
 
 
@@ -144,5 +165,9 @@ array.my_select do |i|
 end
 =end
 
-#array.my_any? {|num| num >= 23}
-#puts "true" if array.any? {|num| num >= 23}
+# array.my_any? {|num| num >= 24}
+# puts "true" if array.any? {|num| num >= 23}
+
+# array.my_none? {|num| num >= 4}
+# puts "---------------------"
+# puts array.none? {|num| num >= 4} ? "true" : "false"
