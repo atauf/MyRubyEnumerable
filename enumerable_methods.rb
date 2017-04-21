@@ -114,11 +114,23 @@ module Enumerable
 	end
 
 
-	def my_count
+	def my_count(num = nil)
 		#count → int
 		#count(item) → int
 		#count { |obj| block } → int
 		#Returns the number of items in enum through enumeration. If an argument is given, the number of items in enum that are equal to item are counted. If a block is given, it counts the number of elements yielding a true value.
+		if num
+			return self.my_select {|i| i == num}.length
+		end
+		if block_given?
+			count = 0
+			self.my_each do |element|
+				count += 1 if yield(element)
+			end
+			return count
+		else
+			return self.size
+		end
 	end
 
 
@@ -171,3 +183,5 @@ end
 # array.my_none? {|num| num >= 4}
 # puts "---------------------"
 # puts array.none? {|num| num >= 4} ? "true" : "false"
+
+# puts array.my_count {|num| num % 2 == 0}
