@@ -133,12 +133,21 @@ module Enumerable
 		end
 	end
 
-
+	# tested
 	def my_map
 		# map { |obj| block } → array
 		# map → an_enumerator
 		# Returns a new array with the results of running block once for every element in enum.
 		# If no block is given, an enumerator is returned instead.
+		if block_given?
+			new_array = []
+			self.my_each do |element|
+				new_array << yield(element)
+			end
+			return new_array
+		else
+			return self.to_enum
+		end
 	end
 
 
@@ -185,3 +194,7 @@ end
 # puts array.none? {|num| num >= 4} ? "true" : "false"
 
 # puts array.my_count {|num| num % 2 == 0}
+
+# puts array.my_map {|num| num / 2}
+# puts "------------------"
+# puts array.map {|num| num / 2}
