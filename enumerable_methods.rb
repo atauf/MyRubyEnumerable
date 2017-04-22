@@ -151,8 +151,8 @@ module Enumerable
 	end
 
 
-	def my_inject
-		# inject(initial, sym) → obj click to toggle source
+	def my_inject(initial = nil, sym = nil)
+		# inject(initial, sym) → obj
 		# inject(sym) → obj
 		# inject(initial) { |memo, obj| block } → obj
 		# inject { |memo, obj| block } → obj
@@ -163,6 +163,22 @@ module Enumerable
 		# If you specify a block, then for each element in enum the block is passed an accumulator value (memo) and the element. If you specify a symbol instead, then each element in the collection will be passed to the named method of memo. In either case, the result becomes the new value for memo. At the end of the iteration, the final value of memo is the return value for the method.
 
 		# If you do not explicitly specify an initial value for memo, then the first element of collection is used as the initial value of memo.
+		if block_given?
+			accumulator = 0
+			if initial
+				accumulator = initial
+			end
+			self.my_each do |element|
+				accumulator = yield(accumulator, element)
+			end
+		elsif sym
+			sym.to_proc
+			self.my_each do |element
+
+		else
+			puts "Error...You might want to try that again!"
+		end
+		accumulator
 	end
 
 
@@ -198,3 +214,7 @@ end
 # puts array.my_map {|num| num / 2}
 # puts "------------------"
 # puts array.map {|num| num / 2}
+
+puts array.my_inject() {|sum, element| sum + element}
+puts "-----------------"
+puts array.inject() {|sum, element| sum + element}
